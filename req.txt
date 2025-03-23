@@ -1,3 +1,5 @@
+tiktoken==0.5.2
+js2py==0.74
 
 fastapi==0.103.1
 uvicorn==0.23.2
