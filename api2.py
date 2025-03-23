@@ -2,7 +2,6 @@ from fastapi import FastAPI, HTTPException, Body
 from pydantic import BaseModel
 from typing import Optional
 from fastapi.middleware.cors import CORSMiddleware
-from fastapi.staticfiles import StaticFiles
 from fastapi.responses import FileResponse
 
 # Import the function from your original file
@@ -39,7 +38,7 @@ class CallResponse(BaseModel):
 
 @app.get("/")
 async def root():
-    return FileResponse('static/index.html')
+    return "hello"
 # Create API endpoints
 @app.post("/make-call", response_model=CallResponse)
 async def api_make_call(call_request: CallRequest = Body(...)):
