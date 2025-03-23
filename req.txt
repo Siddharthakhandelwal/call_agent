@@ -9,3 +9,4 @@ python-multipart==0.0.6
 groq==0.4.1
 aiofiles==23.2.1
 firecrawl
+duckduckgo_search
