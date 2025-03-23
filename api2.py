@@ -35,7 +35,7 @@ class CallResponse(BaseModel):
     customer: Optional[dict] = None
     created_at: Optional[str] = None
     error: Optional[str] = None
-app.mount("/static", StaticFiles(directory="static"), name="static")
+
 
 @app.get("/")
 async def root():
@@ -45,17 +45,17 @@ async def root():
 async def api_make_call(call_request: CallRequest = Body(...)):
     """
     Make an outbound phone call using VAPI.ai
-    
+
     - **name**: Name of the person to call
     - **number**: Phone number to call (with country code)
 
     """
     try:
         result = make_vapi_call(call_request.name, call_request.number,call_request.mail)
-        
+
         if "error" in result:
             raise HTTPException(status_code=400, detail=result["error"])
-            
+
         return result
     except Exception as e:
         raise HTTPException(status_code=400, detail=str(e))
@@ -70,17 +70,17 @@ async def health_check():
 async def api_make_call(call_request: CallRequest = Body(...)):
     """
     Make an outbound phone call using VAPI.ai
-    
+
     - **name**: Name of the person to call
     - **number**: Phone number to call (with country code)
 
     """
     try:
         result = doctor_call(call_request.name, call_request.number,call_request.mail)
-        
+
         if "error" in result:
             raise HTTPException(status_code=400, detail=result["error"])
-            
+
         return result
     except Exception as e:
         raise HTTPException(status_code=400, detail=str(e))
@@ -90,17 +90,21 @@ async def api_make_call(call_request: CallRequest = Body(...)):
 async def api_make_call(call_request: CallRequest = Body(...)):
     """
     Make an outbound phone call using VAPI.ai
-    
+
     - **name**: Name of the person to call
     - **number**: Phone number to call (with country code)
 
     """
     try:
         result = state(call_request.name, call_request.number,call_request.mail)
-        
+
         if "error" in result:
             raise HTTPException(status_code=400, detail=result["error"])
-            
+
         return result
     except Exception as e:
         raise HTTPException(status_code=400, detail=str(e))
+
+if __name__ == "__main__":
+    import uvicorn
+    uvicorn.run(app, host="0.0.0.0", port=3000)
