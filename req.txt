@@ -1,6 +1,6 @@
 tiktoken==0.5.2
 js2py==0.74
-
+fpdf
 fastapi==0.103.1
 uvicorn==0.23.2
 pydantic==2.3.0
