@@ -9,3 +9,5 @@ pydantic==2.3.0
 js2py==0.74
 groq==0.4.1
 mudslide==0.1.0
+aiofiles==23.2.1
+jinja2==3.1.2

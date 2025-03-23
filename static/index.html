@@ -1,0 +1,112 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Voice Call Form</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 600px;
+            margin: 20px auto;
+            padding: 20px;
+        }
+        .form-group {
+            margin-bottom: 15px;
+        }
+        label {
+            display: block;
+            margin-bottom: 5px;
+        }
+        input, select {
+            width: 100%;
+            padding: 8px;
+            margin-bottom: 10px;
+        }
+        button {
+            background-color: #4CAF50;
+            color: white;
+            padding: 10px 15px;
+            border: none;
+            cursor: pointer;
+        }
+        .response {
+            margin-top: 20px;
+            padding: 10px;
+            border: 1px solid #ddd;
+            display: none;
+        }
+    </style>
+</head>
+<body>
+    <h2>Make Voice Call</h2>
+    <form id="callForm">
+        <div class="form-group">
+            <label for="name">Name:</label>
+            <input type="text" id="name" required>
+        </div>
+        <div class="form-group">
+            <label for="number">Phone Number (with country code):</label>
+            <input type="text" id="number" placeholder="+91XXXXXXXXXX" required>
+        </div>
+        <div class="form-group">
+            <label for="email">Email:</label>
+            <input type="email" id="email" required>
+        </div>
+        <div class="form-group">
+            <label for="callType">Call Type:</label>
+            <select id="callType" required>
+                <option value="general">General</option>
+                <option value="doctor">Doctor</option>
+                <option value="state">Real Estate</option>
+            </select>
+        </div>
+        <button type="submit">Make Call</button>
+    </form>
+    <div id="response" class="response"></div>
+
+    <script>
+        document.getElementById('callForm').addEventListener('submit', async (e) => {
+            e.preventDefault();
+            
+            const formData = {
+                name: document.getElementById('name').value,
+                number: document.getElementById('number').value,
+                mail: document.getElementById('email').value
+            };
+
+            const callType = document.getElementById('callType').value;
+            let endpoint = '';
+            
+            switch(callType) {
+                case 'general':
+                    endpoint = '/make-call';
+                    break;
+                case 'doctor':
+                    endpoint = '/doctor';
+                    break;
+                case 'state':
+                    endpoint = '/state';
+                    break;
+            }
+
+            try {
+                const response = await fetch(endpoint, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify(formData)
+                });
+
+                const result = await response.json();
+                const responseDiv = document.getElementById('response');
+                responseDiv.style.display = 'block';
+                responseDiv.textContent = JSON.stringify(result, null, 2);
+            } catch (error) {
+                console.error('Error:', error);
+                alert('An error occurred while making the call');
+            }
+        });
+    </script>
+</body>
+</html>
