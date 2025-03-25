@@ -7,7 +7,8 @@ from general.groqmodel import groq_suum
 from general.whatsapp import create_pdf,send_image
 from general.groq_image import groq_image   
 from general.search_and_download import main
-
+from general.groq_date import groq_date
+from general.supabase_general import update_callback_time,update_summary
 def groq_trans_querr(trans):
     groq_api="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"
 
@@ -93,7 +94,7 @@ def crawl_web(querry):
         return data
 
 
-def to_check_querr(name,call_id,mail,number):
+def to_check_querr(name,call_id,mail,number,contact_id):
   auth_token = '0f4fbb74-f6df-4b5f-83dc-6e7f380e6cf0'
   url = f"https://api.vapi.ai/call/{call_id}"
   headers = {
@@ -110,7 +111,11 @@ def to_check_querr(name,call_id,mail,number):
       try:
         transcript= trans['transcript']
         data=groq_suum(transcript) 
+        call_back=groq_date(transcript)
         send_mail(data,mail,"Summary")
+        update_summary(contact_id,data)
+        if "none" not in call_back or "None" not in call_back:
+            update_callback_time(call_id,call_back)
         create_pdf(number,data)
         querry = groq_trans_querr(transcript)
         image_querry=groq_image(transcript)

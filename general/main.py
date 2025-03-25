@@ -1,17 +1,10 @@
 import requests
 from general.searching import to_check_querr
 import datetime
-
-
-
-def make_vapi_call(name, number,mail):
-
-
+def make_vapi_call(name, number,mail,contact_id):
     # TODO: Move these to environment variables for better security
     auth_token = '0f4fbb74-f6df-4b5f-83dc-6e7f380e6cf0'
     phone_number_id ="e40be9bc-0eda-468d-b414-7ee56f71529b"
-
-
     now = datetime.datetime.now()
     date =now.strftime("%Y-%m-%d")
     current_time = now.strftime("%H:%M:%S")
@@ -61,9 +54,8 @@ def make_vapi_call(name, number,mail):
         call_id = response_data.get('id')
         print("got the id")
         print("calling to check querry")
-        answer = to_check_querr(name,call_id,mail,number)
+        answer = to_check_querr(name,call_id,mail,number,contact_id)
         print("checked querry")
-        print("calling add data")
         return response_data
     except requests.RequestException as e:
         print(f"Request error: {e}")

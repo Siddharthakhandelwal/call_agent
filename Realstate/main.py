@@ -1,7 +1,7 @@
 import requests
 from Realstate.searching import to_check_querr
 import datetime
-def state(name, number,mail):
+def state(name, number,mail,contact_id):
 
     # TODO: Move these to environment variables for better security
     auth_token = '0f4fbb74-f6df-4b5f-83dc-6e7f380e6cf0'
@@ -53,7 +53,7 @@ def state(name, number,mail):
         call_id = response_data.get('id')
         print("got the id")
         print("calling to check querry")
-        answer = to_check_querr(name ,call_id,mail,number)
+        answer = to_check_querr(name ,call_id,mail,number,contact_id)
         
     except requests.RequestException as e:
         print(f"Request error: {e}")
